@@ -74,7 +74,7 @@ static void wrapper(void *ee) {
 }
 
 rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter, rt_uint8_t *stack_addr, void *texit) {
-  Area stack_aligned;
+  Area stack_area;
   Ee *ee;
 
   rt_uint8_t *stack = (rt_uint8_t *)((uintptr_t)stack_addr & ~(sizeof(uintptr_t)-1));
@@ -88,6 +88,6 @@ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter, rt_uint8_t *stack_ad
   ee->to = 0;
   ee->to_flag = 0;
 
-  stack_aligned = (Area) { 0, (void *)((uintptr_t)stack & ~(sizeof(uintptr_t)-1))};
-  return (rt_uint8_t *)kcontext(stack_aligned, wrapper, ee);
+  stack_area = (Area) { 0, (void *)((uintptr_t)stack & ~(sizeof(uintptr_t)-1))};
+  return (rt_uint8_t *)kcontext(stack_area, wrapper, ee);
 }
