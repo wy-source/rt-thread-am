@@ -46,6 +46,7 @@ void rt_hw_context_switch_to(rt_ubase_t to) {
   rt_ubase_t user_data_tmp = current->user_data;
   rt_ubase_t context_p = *(rt_ubase_t *)to;
   Ft *ft = (Ft *) (context_p - sizeof(Ft));
+  ft->from = 0;
   ft->to = to;
   ft->to_flag = 1;
   current->user_data = (rt_ubase_t) ft;
@@ -58,8 +59,8 @@ void rt_hw_context_switch(rt_ubase_t from, rt_ubase_t to) {
   rt_ubase_t user_data_tmp = current->user_data;
   rt_ubase_t context_p = *(rt_ubase_t *)to;
   Ft *ft = (Ft *) (context_p - sizeof(Ft));
-  ft->to = to;
   ft->from = from;
+  ft->to = to;
   ft->to_flag = 0;
   current->user_data = (rt_ubase_t) ft;
   yield();
