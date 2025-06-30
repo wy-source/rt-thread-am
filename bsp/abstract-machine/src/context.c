@@ -23,8 +23,7 @@ static Context* ev_handler(Event e, Context *c) {
       printf("Got event yield %d\n", e.event);
       break;
     case EVENT_IRQ_TIMER: // Handle timer event
-      printf("Got event timer %d\n", e.event);
-      break;
+      return c;
     default: printf("Unhandled event ID = %d\n", e.event); assert(0);
   }
 
