@@ -1,3 +1,6 @@
+PHDRS { data_extra PT_LOAD;
+}
+
 SECTIONS {
   .data.extra : {
     /* section information for finsh shell */
@@ -27,7 +30,7 @@ SECTIONS {
     *(__am_apps.sdata*)
     __am_apps_data_end = .;
     . = ALIGN(8);
-  }
+  } > FLASH : data_extra
 }
 INSERT BEFORE .data;
 
@@ -40,6 +43,6 @@ SECTIONS {
     *(__am_apps.scommon*)
     __am_apps_bss_end = .;
     . = ALIGN(8);
-  }
+  } > PSRAM
 }
 INSERT BEFORE .bss;
