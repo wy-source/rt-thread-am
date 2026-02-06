@@ -43,6 +43,6 @@ SECTIONS {
     *(__am_apps.scommon*)
     __am_apps_bss_end = .;
     . = ALIGN(8);
-  } > PSRAM
+  } > SDRAM
 }
 INSERT BEFORE .bss;
