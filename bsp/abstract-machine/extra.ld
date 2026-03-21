@@ -3,6 +3,7 @@ PHDRS { data_extra PT_LOAD;
 
 SECTIONS {
   .data.extra : {
+    _extra_data_start = .;
     /* section information for finsh shell */
     __fsymtab_start = .;
     KEEP(*(FSymTab))
@@ -29,8 +30,10 @@ SECTIONS {
     *(__am_apps.data*)
     *(__am_apps.sdata*)
     __am_apps_data_end = .;
+    _extra_data_end = .;
+    _extra_data_lma = LOADADDR(.data.extra);
     . = ALIGN(8);
-  } > FLASH : data_extra
+  } > SDRAM AT > FLASH : data_extra
 }
 INSERT BEFORE .data;
 
