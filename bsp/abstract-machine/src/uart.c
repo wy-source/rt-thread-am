@@ -37,8 +37,9 @@ static int _uart_putc(struct rt_serial_device *serial, char c) {
 }
 
 static int _uart_getc(struct rt_serial_device *serial) {
-  //static const char *p = "help\ndate\nversion\nfree\nps\npwd\nls\nmemtrace\nmemcheck\nutest_list\n";
-  //return (*p != '\0' ? *(p ++) : -1);
+  // feed the preset commands first, then switch to manual input
+  static const char *p = "help\ndate\nversion\nfree\nps\npwd\nls\nmemtrace\nmemcheck\nutest_list\n";
+  if (*p != '\0') return *(p ++);
   // getch() returns 0xff when no data; rt-thread serial expects -1
   char ch = getch();
   return ch == (char)0xff ? -1 : (unsigned char)ch;
