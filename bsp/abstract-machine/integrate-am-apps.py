@@ -26,6 +26,13 @@ if not sys.argv[2].startswith("CROSS_COMPILE="):
     exit(-1)
 CROSS_COMPILE = sys.argv[2][14:]
 
+# npc only has 4MB PSRAM (linker-npc.ld): keep the small apps only
+if ARCH.endswith("-npc"):
+    app_dir_list = [
+      AM_KERNELS_HOME / "kernels" / "hello",
+      AM_KERNELS_HOME / "benchmarks" / "microbench",
+    ]
+
 Path("build").mkdir(exist_ok=True)
 am_app_mk_fp = open(f"build/{ARCH}/am-apps.mk", "w")
 am_app_c_fp  = open("build/am-apps.c" , "w")
