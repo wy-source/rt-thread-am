@@ -8,7 +8,12 @@ NAME = rtthread
 SRCS = $(shell find src -name "*.c")
 CFLAGS += -DHAVE_CCONFIG_H -D__RTTHREAD__
 CFLAGS += -Wno-nonnull-compare
+# npc runs everything in place from PSRAM (linker-npc.ld); others load from FLASH to SDRAM
+ifneq ($(filter %-npc,$(ARCH)),)
+LDFLAGS += -T extra-npc.ld
+else
 LDFLAGS += -T extra.ld
+endif
 -include $(FILE_MK)
 -include $(AM_APPS_MK)
 include $(AM_HOME)/Makefile
