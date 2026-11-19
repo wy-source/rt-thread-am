@@ -32,6 +32,9 @@ if ARCH.endswith("-npc"):
       AM_KERNELS_HOME / "kernels" / "hello",
       AM_KERNELS_HOME / "benchmarks" / "microbench",
     ]
+# ysyxsoc copies .text from SPI flash via XIP (slow): drop fceux (~220KB text + ~2MB ROM)
+elif ARCH.endswith("-ysyxsoc"):
+    app_dir_list = [d for d in app_dir_list if d.name != "fceux-am"]
 
 Path("build").mkdir(exist_ok=True)
 am_app_mk_fp = open(f"build/{ARCH}/am-apps.mk", "w")
